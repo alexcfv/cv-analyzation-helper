@@ -1,0 +1,1 @@
+This is a system that processes resumes into vector embeddings and retrieves the most relevant candidates based on a job query. It uses an LLM (Mistral) to rank results and generate explanations, enabling automated and intelligent candidate screening.
