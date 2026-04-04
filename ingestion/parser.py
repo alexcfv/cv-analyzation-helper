@@ -9,3 +9,8 @@ class ResumeParser:
                 text += page.extract_text() or ""
 
         return self.clean_text(text)
+        
+    def clean_text(self, text: str) -> str:
+        text = text.replace("\n", " ")
+        text = " ".join(text.split())
+        return text
