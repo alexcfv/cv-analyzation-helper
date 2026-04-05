@@ -5,18 +5,19 @@ class ResumeLoader:
     def __init__(self):
         self.parser = ResumeParser()
 
-    def load_folder(self, path: str):
+    def load_folder(self, path: str) -> list[str]:
         documents = []
 
         for filename in os.listdir(path):
             full_path = os.path.join(path, filename)
 
             if filename.endswith(".pdf"):
-                text = self.parser.parse_pdf(full_path)
+                chunks = self.parser.parse_pdf(full_path)
 
-                documents.append({
-                    "text": text,
-                    "source": filename
-                })
+                for chunk in chunks:
+                    documents.append({
+                        "chunk": chunk,
+                        "source": filename
+                    })
                 
         return documents
