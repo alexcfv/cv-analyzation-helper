@@ -12,11 +12,12 @@ class ResumeLoader:
             full_path = os.path.join(path, filename)
 
             if filename.endswith(".pdf"):
-                text = self.parser.parse_pdf(full_path)
+                chunks = self.parser.parse_pdf(full_path)
 
-                documents.append({
-                    "text": text,
-                    "source": filename
-                })
+                for chunk in chunks:
+                    documents.append({
+                        "chunk": chunk,
+                        "source": filename
+                    })
                 
         return documents
