@@ -5,7 +5,7 @@ class ResumeLoader:
     def __init__(self):
         self.parser = ResumeParser()
 
-    def load_folder(self, path: str):
+    def load_folder(self, path: str) -> list[str]:
         documents = []
 
         for filename in os.listdir(path):
