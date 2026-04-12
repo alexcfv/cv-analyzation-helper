@@ -13,11 +13,14 @@ class ResumeLoader:
 
             if filename.endswith(".pdf"):
                 chunks = self.parser.parse_pdf(full_path)
+                chunk_index = 0
 
                 for chunk in chunks:
                     documents.append({
                         "chunk": chunk,
-                        "source": filename
+                        "source": filename,
+                        "id": f"{filename}_{chunk_index}"
                     })
+                    chunk_index += 1
                 
         return documents
