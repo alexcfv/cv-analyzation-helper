@@ -1,7 +1,24 @@
+from embedding.embedder import MistralEmbedder
+from db.vector_store import VectorStore
 from ingestion.loader import ResumeLoader
+import chromadb
 
-resume_loader = ResumeLoader()
+def main():
+    # init
+    embedder = MistralEmbedder()
+    loader = ResumeLoader()
 
-dir_path = input("enter dir path for the resumes: ")
+    client = chromadb.Client()
+    store = VectorStore(client)
 
-print(resume_loader.load_folder(dir_path))
+    # load docs
+    dir_path = input("Endet resumes dir path: ")
+    documents = loader.load_folder(dir_path)
+
+    # add to DB
+    store.add_documents(documents, embedder)
+
+    print("✅ Indexing complete")
+
+if __name__ == "__main__":
+    main()
