@@ -12,7 +12,7 @@ def main():
     store = VectorStore(client)
 
     # load docs
-    dir_path = input("Endet resumes dir path: ")
+    dir_path = input("Enter resumes dir path: ")
     documents = loader.load_folder(dir_path)
 
     # add to DB
@@ -20,5 +20,10 @@ def main():
 
     print("✅ Indexing complete")
 
+    # test
+    results = store.search("python backend developer", embedder)
+    for result in results:
+        print(result.text, result.source)
+        
 if __name__ == "__main__":
     main()
