@@ -20,5 +20,8 @@ def main():
 
     print("✅ Indexing complete")
 
+    #Test
+    print(store.search("python backend developer", embedder))
+
 if __name__ == "__main__":
     main()
