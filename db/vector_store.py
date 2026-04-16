@@ -30,12 +30,28 @@ class VectorStore:
             metadatas=metadatas
         )
 
-    def search(self, query: str, embedder, k=5) -> list[SearchResultItem]:
-        query_embedding = embedder.embed(query)
+    def search(self, query: str, embedder, k: int = 5) -> list[SearchResultItem]:
+        query_embedding = embedder.embed_batch([query])[0]
 
         results = self.collection.query(
             query_embeddings=[query_embedding],
             n_results=k
         )
 
-        return results
+        items = []
+
+        docs = results["documents"][0]
+        metas = results["metadatas"][0]
+        dists = results["distances"][0]
+
+        for doc, meta, dist in zip(docs, metas, dists):
+            items.append(
+                SearchResultItem(
+                    text=doc,
+                    source=meta["source"],
+                    distance=dist,
+                    chunk_id=meta["id"]
+                )
+            )
+
+        return items
