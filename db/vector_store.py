@@ -1,3 +1,5 @@
+from models.search_results import SearchResultItem
+
 import chromadb
 import uuid
 
@@ -28,7 +30,7 @@ class VectorStore:
             metadatas=metadatas
         )
 
-    def search(self, query: str, embedder, k=5):
+    def search(self, query: str, embedder, k=5) -> list[SearchResultItem]:
         query_embedding = embedder.embed(query)
 
         results = self.collection.query(

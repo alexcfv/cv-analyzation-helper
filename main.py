@@ -12,7 +12,7 @@ def main():
     store = VectorStore(client)
 
     # load docs
-    dir_path = input("Endet resumes dir path: ")
+    dir_path = input("Enter resumes dir path: ")
     documents = loader.load_folder(dir_path)
 
     # add to DB
