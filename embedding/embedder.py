@@ -1,12 +1,9 @@
 import requests
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class MistralEmbedder:
-    def __init__(self):
-        self.api_key = os.getenv("MISTRAL_API_KEY")
+    def __init__(self, api_key):
+        self.api_key = api_key
         self.url = "https://api.mistral.ai/v1/embeddings"
 
     def embed(self, text: str) -> list[float]:
