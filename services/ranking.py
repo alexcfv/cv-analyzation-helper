@@ -1,6 +1,6 @@
 from collections import defaultdict
 from typing import List, Dict, DefaultDict, Tuple
-from models.search_result import SearchResultItem
+from models.search_results import SearchResultItem
 
 
 def group_by_resume(results: List[SearchResultItem]) -> DefaultDict[str, List[SearchResultItem]]:
