@@ -5,6 +5,7 @@ def init_db():
         conn.execute("""
             CREATE TABLE IF NOT EXISTS profiles (
                 id TEXT PRIMARY KEY,
+                profile_source_id TEXT,
                 profile JSON
             )
         """)
