@@ -1,4 +1,4 @@
-from db.connection import get_db
+from db.sqlite.connection import get_db
 
 def init_db():
     with get_db() as conn:
