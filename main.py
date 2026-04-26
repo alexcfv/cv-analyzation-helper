@@ -49,7 +49,7 @@ def main():
 
     top_candidate_chunks = [r.text for r in results if r.source == top_candidate]
 
-    explanation = explainer.explain(query, top_chunks)
+    explanation = explainer.explain(query, top_candidate_chunks)
 
     print("Candidate:", top_candidate)
     print("Explanation:\n", explanation)
