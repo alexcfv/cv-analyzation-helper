@@ -4,8 +4,8 @@ def init_db():
     with get_db() as conn:
         conn.execute("""
             CREATE TABLE IF NOT EXISTS profiles (
-                id TEXT PRIMARY KEY,
-                profile_source_id TEXT,
+                uuid TEXT PRIMARY KEY,
+                profile_source TEXT,
                 profile JSON
             )
         """)

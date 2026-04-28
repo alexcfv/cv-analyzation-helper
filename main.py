@@ -20,7 +20,7 @@ def main():
     explainer = LLMExplainer(api_key_mistral)
     loader = ResumeLoader()
 
-    repo = ProfileRepository()
+    profile_repository = ProfileRepository()
     profile_builder = ProfileBuilder(api_key_mistral)
     client = chromadb.Client()
     store = VectorStore(client)
@@ -49,16 +49,17 @@ def main():
 
     top_candidate_chunks = [r.text for r in results if r.source == top_candidate]
 
-    explanation = explainer.explain(query, top_chunks)
+    explanation = explainer.explain(query, top_candidate_chunks)
 
     print("Candidate:", top_candidate)
     print("Explanation:\n", explanation)
 
     #profile builder
     top_candidate_profile = profile_builder.build_profile(top_candidate_chunks)
-    print(top_candidate_profile)
 
     #insert profile into db
+    profile_repository.create_profile(top_candidate, top_candidate_profile)
+    print(profile_repository.get_all())
 
         
 if __name__ == "__main__":
