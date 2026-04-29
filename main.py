@@ -23,14 +23,14 @@ def main():
     profile_repository = ProfileRepository()
     profile_builder = ProfileBuilder(api_key_mistral)
     client = chromadb.Client()
-    store = VectorStore(client)
+    vectore_store = VectorStore(client)
 
     # load docs
     dir_path = input("Enter resumes dir path: ")
     documents = loader.load_folder(dir_path)
 
     # add to DB
-    store.add_documents(documents, embedder)
+    vectore_store.add_documents(documents, embedder)
 
     print("✅ Indexing complete")
 
