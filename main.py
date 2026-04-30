@@ -37,7 +37,7 @@ def main():
     # test
     query = "python backend developer"
 
-    results = store.search(query, embedder)
+    results = vectore_store.search(query, embedder)
 
     ranked = find_best_candidates(results)
 
