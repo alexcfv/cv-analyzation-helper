@@ -45,5 +45,3 @@ Only return valid JSON.
             return json.loads(content)
         except json.JSONDecodeError:
             print("Invalid JSON:", content)
-        except Exception as e:
-            raise e

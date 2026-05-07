@@ -23,21 +23,21 @@ def main():
     profile_repository = ProfileRepository()
     profile_builder = ProfileBuilder(api_key_mistral)
     client = chromadb.Client()
-    vectore_store = VectorStore(client)
+    vector_store = VectorStore(client)
 
     # load docs
     dir_path = input("Enter resumes dir path: ")
     documents = loader.load_folder(dir_path)
 
     # add to DB
-    vectore_store.add_documents(documents, embedder)
+    vector_store.add_documents(documents, embedder)
 
     print("✅ Indexing complete")
 
     # test
     query = "python backend developer"
 
-    results = vectore_store.search(query, embedder)
+    results = vector_store.search(query, embedder)
 
     ranked = find_best_candidates(results)
 
