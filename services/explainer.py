@@ -8,7 +8,7 @@ class LLMExplainer:
             base_url="https://api.mistral.ai/v1"
         )
 
-    def explain(self, query: str, chunks: list[str]) -> str:
+    def explain(self, query: str, chunks: list[str]) -> list[str]:
         context = "\n".join(chunks[:3])
 
         prompt = f"""
