@@ -49,14 +49,14 @@ def main():
     #top candidate explanation
     top_candidate = ranked[0][0]
 
-    top_candidate_chunks = [r.text for r in results if r.source == top_candidate]
-
-    explanation = explainer.explain(query, top_candidate_chunks)
+    explanation = explainer.explain(query, top_candidate, results)
 
     print("Candidate:", top_candidate)
     print("Explanation:\n", explanation)
-
     #profile builder
+    top_candidate_chunks = [r.text for r in results if r.source == top_candidate]
+
+
     top_candidate_profile = profile_builder.build_profile(top_candidate_chunks)
 
     #insert profile into db
