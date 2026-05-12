@@ -39,7 +39,7 @@ def main():
         print("Indexing complete")
         results = vector_store.search(query, embedder)
     else:
-        print("Use cashed data")
+        print("Use cached data")
 
     ranked = find_best_candidates(results)
 

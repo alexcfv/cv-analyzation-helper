@@ -44,4 +44,4 @@ Only return valid JSON.
         try:
             return json.loads(content)
         except json.JSONDecodeError:
-            print("Invalid JSON:", content)
+            raise ValueError(f"Invalid JSON from LLM: {content}")
