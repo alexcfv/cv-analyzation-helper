@@ -1,7 +1,7 @@
 import pdfplumber
 
 class ResumeParser:
-    def parse_pdf(self, file_path: str) -> str:
+    def parse_pdf(self, file_path: str) -> list[str]:
         text = ""
 
         with pdfplumber.open(file_path) as pdf:
@@ -10,7 +10,7 @@ class ResumeParser:
 
         return self.clean_text(text)
         
-    def clean_text(self, text: str) -> str:
+    def clean_text(self, text: str) -> list[str]:
         text = text.replace("\n", " ")
         text = " ".join(text.split())
         return self.split_text(text)

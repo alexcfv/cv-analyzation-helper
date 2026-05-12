@@ -30,7 +30,7 @@ class VectorStore:
             metadatas=metadatas
         )
 
-    def search(self, query: str, embedder, k: int = 5) -> list[SearchResultItem]:
+    def search(self, query: str, embedder, k: int = 15) -> list[SearchResultItem]:
         query_embedding = embedder.embed_batch([query])[0]
 
         results = self.collection.query(

@@ -1,5 +1,5 @@
 from openai import OpenAI
-
+from models.search_results import SearchResultItem
 
 class LLMExplainer:
     def __init__(self, api_key: str):
@@ -8,8 +8,12 @@ class LLMExplainer:
             base_url="https://api.mistral.ai/v1"
         )
 
-    def explain(self, query: str, chunks: list[str]) -> list[str]:
-        context = "\n".join(chunks[:3])
+    def explain(self, query: str, candidate: str, vectors: list[SearchResultItem]) -> list[str]: #vectores - nearest vectors to query
+        vectors.sort(key=lambda x: x.distance)
+
+        candidate_chunks = [r.text for r in vectors if r.source == candidate]
+
+        context = "\n".join(candidate_chunks[:3])
 
         prompt = f"""
 You are an AI recruiter.
