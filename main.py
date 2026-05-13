@@ -32,34 +32,41 @@ def main():
     # test
     query = "python backend developer"
 
+    # add to DB if doc is not indexed
+    existing = set()
+    if vector_store.collection.count() > 0:
+        existing = set(
+            m["source"] for m in vector_store.collection.get(limit=10000)["metadatas"]
+        )
+
+    new_docs = [d for d in documents if d["source"] not in existing]
+
+    if new_docs:
+        vector_store.add_documents(new_docs, embedder)
+        print(f"Indexed {len(new_docs)} chunks from new files")
+
     results = vector_store.search(query, embedder)
-    #add to DB
-    if len(results) == 0:
-        vector_store.add_documents(documents, embedder)
-        print("Indexing complete")
-        results = vector_store.search(query, embedder)
-    else:
-        print("Use cached data")
 
     ranked = find_best_candidates(results)
 
     for source, score in ranked:
         print(source, score)
 
-    #top candidate explanation
+    # top candidate explanation
     top_candidate = ranked[0][0]
 
     explanation = explainer.explain(query, top_candidate, results)
 
     print("Candidate:", top_candidate)
     print("Explanation:\n", explanation)
-    #profile builder
+
+    # profile builder
     top_candidate_chunks = [r.text for r in results if r.source == top_candidate]
 
 
     top_candidate_profile = profile_builder.build_profile(top_candidate_chunks)
 
-    #insert profile into db
+    # insert profile into db
     profile_repository.create_profile(top_candidate, top_candidate_profile)
     print(profile_repository.get_all())
 
