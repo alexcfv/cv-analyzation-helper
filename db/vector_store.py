@@ -1,7 +1,7 @@
 from models.search_results import SearchResultItem
-
 import chromadb
 import uuid
+from collections import defaultdict
 
 class VectorStore:
     def __init__(self, client):
@@ -29,6 +29,16 @@ class VectorStore:
             embeddings=embeddings,
             metadatas=metadatas
         )
+
+    def get_all_grouped_by_source(self) -> dict[str, list[str]]:
+        data = self.collection.get(limit=10000)
+
+        grouped: dict[str, list[str]] = defaultdict(list)
+
+        for source, doc in zip(data["metadatas"], data["documents"]):
+            grouped[source["source"]].append(doc)
+
+        return grouped
 
     def search(self, query: str, embedder, k: int = 15) -> list[SearchResultItem]:
         query_embedding = embedder.embed_batch([query])[0]

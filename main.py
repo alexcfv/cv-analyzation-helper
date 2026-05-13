@@ -60,14 +60,14 @@ def main():
     print("Candidate:", top_candidate)
     print("Explanation:\n", explanation)
 
-    # profile builder
-    top_candidate_chunks = [r.text for r in results if r.source == top_candidate]
+    # add profiles
+    all_grouped = vector_store.get_all_grouped_by_source()
+    for source, chunks in all_grouped.items():
+        if not profile_repository.profile_exists(source):
+            profile = profile_builder.build_profile(chunks)
+            profile_repository.create_profile(source, profile)
+            print(f"Profile saved for {source}")
 
-
-    top_candidate_profile = profile_builder.build_profile(top_candidate_chunks)
-
-    # insert profile into db
-    profile_repository.create_profile(top_candidate, top_candidate_profile)
     print(profile_repository.get_all())
 
         

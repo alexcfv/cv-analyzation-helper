@@ -38,6 +38,14 @@ class ProfileRepository:
                 (profile_uuid, profile_source, str(profile))
             )
 
+    def profile_exists(self, source: str) -> bool:
+        with get_db() as conn:
+            row = conn.execute(
+                "SELECT 1 FROM profiles WHERE profile_source = ? LIMIT 1",
+                (source,)
+            ).fetchone()
+            return row is not None
+
     def get_all(self):
         with get_db() as conn:
             rows = conn.execute("SELECT * FROM profiles").fetchall()
