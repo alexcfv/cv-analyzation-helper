@@ -6,7 +6,8 @@ class ProfileBuilder:
     def __init__(self, api_key: str, rate_limiter=None):
         self.client = OpenAI(
             api_key=api_key,
-            base_url="https://api.mistral.ai/v1"
+            base_url="https://api.mistral.ai/v1",
+            timeout=60
         )
         self.rate_limiter = rate_limiter
 

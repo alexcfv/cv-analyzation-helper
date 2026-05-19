@@ -5,7 +5,8 @@ class LLMExplainer:
     def __init__(self, api_key: str, rate_limiter=None):
         self.client = OpenAI(
             api_key=api_key,
-            base_url="https://api.mistral.ai/v1"
+            base_url="https://api.mistral.ai/v1",
+            timeout=60
         )
         self.rate_limiter = rate_limiter
 
@@ -32,7 +33,7 @@ Use bullet points.
         if self.rate_limiter:
             self.rate_limiter.wait()
         response = self.client.chat.completions.create(
-            model="mistral-small-latest",
+            model="mistral-small-2603",
             messages=[
                 {"role": "user", "content": prompt}
             ]
