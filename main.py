@@ -7,6 +7,7 @@ from services.query_service import QueryService
 from db.sqlite.migrations import init_db
 from repositories.profile_repo import ProfileRepository
 from services.profile_builder import ProfileBuilder
+from services.rate_limiter import RateLimiter
 from dotenv import load_dotenv
 import chromadb
 import os
@@ -17,11 +18,13 @@ def main():
     load_dotenv()
     api_key_mistral = os.getenv("MISTRAL_API_KEY")
 
-    embedder = MistralEmbedder(api_key_mistral)
-    explainer = LLMExplainer(api_key_mistral)
+    rate_limiter = RateLimiter()
+
+    embedder = MistralEmbedder(api_key_mistral, rate_limiter=rate_limiter)
+    explainer = LLMExplainer(api_key_mistral, rate_limiter=rate_limiter)
     loader = ResumeLoader()
     profile_repository = ProfileRepository()
-    profile_builder = ProfileBuilder(api_key_mistral)
+    profile_builder = ProfileBuilder(api_key_mistral, rate_limiter=rate_limiter)
     client = chromadb.PersistentClient(path="./chromadb")
     vector_store = VectorStore(client)
 

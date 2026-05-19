@@ -2,11 +2,14 @@ import requests
 import os
 
 class MistralEmbedder:
-    def __init__(self, api_key):
+    def __init__(self, api_key, rate_limiter=None):
         self.api_key = api_key
         self.url = "https://api.mistral.ai/v1/embeddings"
+        self.rate_limiter = rate_limiter
 
     def embed(self, text: str) -> list[float]:
+        if self.rate_limiter:
+            self.rate_limiter.wait()
         response = requests.post(
             self.url,
             headers={
@@ -29,6 +32,8 @@ class MistralEmbedder:
         for i in range(0, len(texts), batch_size):
             batch = texts[i:i + batch_size]
 
+            if self.rate_limiter:
+                self.rate_limiter.wait()
             response = requests.post(
                 self.url,
                 headers={
