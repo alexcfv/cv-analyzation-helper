@@ -3,11 +3,12 @@ import json
 
 
 class ProfileBuilder:
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, rate_limiter=None):
         self.client = OpenAI(
             api_key=api_key,
             base_url="https://api.mistral.ai/v1"
         )
+        self.rate_limiter = rate_limiter
 
     def build_profile(self, chunks: list[str]) -> dict:
         context = "\n".join(chunks)
@@ -28,6 +29,8 @@ Return JSON with:
 Only return valid JSON.
 """
 
+        if self.rate_limiter:
+            self.rate_limiter.wait()
         response = self.client.chat.completions.create(
             model="mistral-small-latest",
             messages=[
