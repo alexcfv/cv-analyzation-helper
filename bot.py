@@ -90,13 +90,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("No candidates found.")
             return
 
-        lines = [f"Results for: {query}\n"]
+        await update.message.reply_text(f"Results for: {query}")
         for i, c in enumerate(result["candidates"], 1):
-            lines.append(f"{i}. {c['source']} (score: {c['score']:.4f})")
-            lines.append(c["explanation"])
-            lines.append("")
-
-        await update.message.reply_text("\n".join(lines))
+            text = f"{i}. {c['source']} (score: {c['score']:.4f})\n\n{c['explanation']}"
+            await update.message.reply_text(text)
     except Exception as e:
         await update.message.reply_text(f"Search error: {e}")
 
