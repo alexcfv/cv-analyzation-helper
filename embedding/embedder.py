@@ -43,7 +43,8 @@ class MistralEmbedder:
                 json={
                     "model": "mistral-embed",
                     "input": batch
-                }
+                },
+                timeout=60
             )
 
             if response.status_code != 200:
