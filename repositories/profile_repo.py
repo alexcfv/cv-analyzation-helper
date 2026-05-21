@@ -50,3 +50,14 @@ class ProfileRepository:
         with get_db() as conn:
             rows = conn.execute("SELECT * FROM profiles").fetchall()
             return [dict(row) for row in rows]
+
+    def get_by_sources(self, sources: list[str]) -> dict[str, dict]:
+        if not sources:
+            return {}
+        placeholders = ",".join("?" for _ in sources)
+        with get_db() as conn:
+            rows = conn.execute(
+                f"SELECT * FROM profiles WHERE profile_source IN ({placeholders})",
+                sources
+            ).fetchall()
+            return {row["profile_source"]: row for row in rows}

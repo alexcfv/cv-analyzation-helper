@@ -7,7 +7,7 @@ class QueryService:
         self.vector_store = vector_store
         self.explainer = explainer
 
-    def search(self, query: str, top_k: int = 3) -> dict:
+    def search(self, query: str, top_k: int = 10) -> dict:
         results = self.vector_store.search(query, self.embedder)
         ranked = find_best_candidates(results)
 
