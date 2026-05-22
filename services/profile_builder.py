@@ -15,19 +15,21 @@ class ProfileBuilder:
         context = "\n".join(chunks)
 
         prompt = f"""
-You are an AI that extracts structured candidate profiles from resume text.
+Extract a structured candidate profile from the resume text below.
 
-Resume parts:
+Return valid JSON with EXACTLY these fields:
+- "summary": string
+- "skills": flat list of strings, e.g. ["Python", "Django", "FastAPI", "Docker"]
+- "experience": list of objects, each with "role", "company", "description"
+- "education": list of objects, each with "degree", "institution"
+- "projects": list of objects, each with "name", "description"
+
+Rules:
+- "skills" MUST be a flat array of strings. NEVER group skills into categories.
+- All string values use double quotes.
+
+Resume:
 {context}
-
-Return JSON with:
-- summary
-- skills (list)
-- experience (list)
-- education (list)
-- projects (list)
-
-Only return valid JSON.
 """
 
         if self.rate_limiter:

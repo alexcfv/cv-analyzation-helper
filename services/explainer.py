@@ -18,16 +18,20 @@ class LLMExplainer:
         context = "\n".join(candidate_chunks[:3])
 
         prompt = f"""
-You are an AI recruiter.
+You are a technical recruiter. Given job requirements and candidate resume parts, respond in under 50 words.
+
+Summarize:
+- Key skills matched
+- Company they worked at
+- Relevant tasks/projects they handled
+
+Be concise. No fluff. No bullet points. One short paragraph.
 
 Job requirements:
 {query}
 
 Candidate resume parts:
 {context}
-
-Explain why this candidate fits the job.
-Use bullet points.
 """
 
         if self.rate_limiter:
