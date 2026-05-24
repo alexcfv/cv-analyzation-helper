@@ -83,7 +83,7 @@ Candidates:
                 llm_score = 5.0
 
             llm_score = max(1, min(10, llm_score))
-            final_score = 0.3 * emb_score + 0.7 * (llm_score / 10)
+            final_score = 0.3 * emb_score + 0.7 * (1 - llm_score / 10)
             results.append((source, final_score, f"LLM score: {llm_score:.0f}/10"))
 
         results.sort(key=lambda x: x[1])

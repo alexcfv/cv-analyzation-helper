@@ -60,4 +60,4 @@ class ProfileRepository:
                 f"SELECT * FROM profiles WHERE profile_source IN ({placeholders})",
                 sources
             ).fetchall()
-            return {row["profile_source"]: row for row in rows}
+            return {row["profile_source"]: dict(row) for row in rows}
