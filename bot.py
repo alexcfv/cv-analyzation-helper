@@ -16,6 +16,7 @@ from services.index_service import IndexService
 from services.profile_builder import ProfileBuilder
 from services.query_service import QueryService
 from services.rate_limiter import RateLimiter
+from services.profile_reranker import ProfileReranker
 
 load_dotenv()
 init_db()
@@ -30,11 +31,12 @@ explainer = LLMExplainer(MISTRAL_API_KEY, rate_limiter=rate_limiter)
 loader = ResumeLoader()
 profile_repository = ProfileRepository()
 profile_builder = ProfileBuilder(MISTRAL_API_KEY, rate_limiter=rate_limiter)
+profile_reranker = ProfileReranker(MISTRAL_API_KEY, rate_limiter=rate_limiter)
 client = chromadb.PersistentClient(path="./chromadb")
 vector_store = VectorStore(client)
 
 index_service = IndexService(embedder, loader, vector_store, profile_builder, profile_repository)
-query_service = QueryService(embedder, vector_store, explainer)
+query_service = QueryService(embedder, vector_store, explainer, profile_repository, profile_reranker)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
