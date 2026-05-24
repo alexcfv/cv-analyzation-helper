@@ -7,6 +7,7 @@ from services.query_service import QueryService
 from db.sqlite.migrations import init_db
 from repositories.profile_repo import ProfileRepository
 from services.profile_builder import ProfileBuilder
+from services.profile_reranker import ProfileReranker
 from services.rate_limiter import RateLimiter
 from dotenv import load_dotenv
 import chromadb
@@ -25,11 +26,12 @@ def main():
     loader = ResumeLoader()
     profile_repository = ProfileRepository()
     profile_builder = ProfileBuilder(api_key_mistral, rate_limiter=rate_limiter)
+    profile_reranker = ProfileReranker(api_key_mistral, rate_limiter=rate_limiter)
     client = chromadb.PersistentClient(path="./chromadb")
     vector_store = VectorStore(client)
 
     index_service = IndexService(embedder, loader, vector_store, profile_builder, profile_repository)
-    query_service = QueryService(embedder, vector_store, explainer)
+    query_service = QueryService(embedder, vector_store, explainer, profile_repository, profile_reranker)
 
     dir_path = input("Enter resumes dir path: ")
     result = index_service.index_folder(dir_path)
