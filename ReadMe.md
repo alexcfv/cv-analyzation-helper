@@ -8,7 +8,7 @@ AI-powered resume search tool. Ingests PDF resumes, indexes them via Mistral emb
 - Extracts text via `pdfplumber`, splits into 500-char chunks with 100-char overlap
 - Each chunk → Mistral embedding → stored in ChromaDB (persistent vector DB)
 - For every new resume, LLM builds a structured profile (summary, skills, experience, projects, education) and saves it to SQLite
-- Profiles persist between runs and are used during reranking
+- Profiles persist between runs and are used during reranking (Stage B)
 
 ### 2. Search flow
 
