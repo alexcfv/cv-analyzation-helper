@@ -9,17 +9,16 @@ from repositories.profile_repo import ProfileRepository
 from services.profile_builder import ProfileBuilder
 from services.profile_reranker import ProfileReranker
 from services.rate_limiter import RateLimiter
-from dotenv import load_dotenv
+from config import load_config
 import chromadb
-import os
 
 
 def main():
+    cfg = load_config()
     init_db()
-    load_dotenv()
-    api_key_mistral = os.getenv("MISTRAL_API_KEY")
+    api_key_mistral = cfg["api"]["mistral_key"]
 
-    rate_limiter = RateLimiter()
+    rate_limiter = RateLimiter(min_interval=cfg["rate_limiter"]["min_interval"])
 
     embedder = MistralEmbedder(api_key_mistral, rate_limiter=rate_limiter)
     explainer = LLMExplainer(api_key_mistral, rate_limiter=rate_limiter)
