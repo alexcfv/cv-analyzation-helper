@@ -26,12 +26,12 @@ TELEGRAM_BOT_TOKEN = cfg["api"]["telegram_key"]
 
 rate_limiter = RateLimiter(min_interval=cfg["rate_limiter"]["min_interval"])
 
-embedder = MistralEmbedder(MISTRAL_API_KEY, rate_limiter=rate_limiter)
-explainer = LLMExplainer(MISTRAL_API_KEY, rate_limiter=rate_limiter)
+embedder = MistralEmbedder(MISTRAL_API_KEY, model=cfg["embedder"]["model"], timeout=cfg["embedder"]["timeout"], rate_limiter=rate_limiter)
+explainer = LLMExplainer(MISTRAL_API_KEY, model=cfg["explainer"]["model"], timeout=cfg["explainer"]["timeout"], rate_limiter=rate_limiter)
 loader = ResumeLoader()
 profile_repository = ProfileRepository()
-profile_builder = ProfileBuilder(MISTRAL_API_KEY, rate_limiter=rate_limiter)
-profile_reranker = ProfileReranker(MISTRAL_API_KEY, rate_limiter=rate_limiter)
+profile_builder = ProfileBuilder(MISTRAL_API_KEY, model=cfg["profile_builder"]["model"], timeout=cfg["profile_builder"]["timeout"], rate_limiter=rate_limiter)
+profile_reranker = ProfileReranker(MISTRAL_API_KEY, model=cfg["reranker"]["model"], timeout=cfg["reranker"]["timeout"], rate_limiter=rate_limiter)
 client = chromadb.PersistentClient(path="./chromadb")
 vector_store = VectorStore(client)
 
