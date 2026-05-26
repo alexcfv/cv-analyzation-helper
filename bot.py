@@ -2,10 +2,10 @@ import asyncio
 import os
 
 import chromadb
-from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
+from config import load_config
 from db.sqlite.migrations import init_db
 from db.vector_store import VectorStore
 from embedding.embedder import MistralEmbedder
@@ -18,13 +18,13 @@ from services.query_service import QueryService
 from services.rate_limiter import RateLimiter
 from services.profile_reranker import ProfileReranker
 
-load_dotenv()
+cfg = load_config()
 init_db()
 
-MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_API_KEY")
+MISTRAL_API_KEY = cfg["api"]["mistral_key"]
+TELEGRAM_BOT_TOKEN = cfg["api"]["telegram_key"]
 
-rate_limiter = RateLimiter()
+rate_limiter = RateLimiter(min_interval=cfg["rate_limiter"]["min_interval"])
 
 embedder = MistralEmbedder(MISTRAL_API_KEY, rate_limiter=rate_limiter)
 explainer = LLMExplainer(MISTRAL_API_KEY, rate_limiter=rate_limiter)

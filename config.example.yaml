@@ -1,0 +1,22 @@
+api:
+  mistral_key: "your-mistral-api-key"
+  telegram_key: "your-telegram-bot-token"
+
+rate_limiter:
+  min_interval: 1.2
+
+embedder:
+  model: mistral-embed
+  timeout: 60
+
+explainer:
+  model: mistral-small-2603
+  timeout: 60
+
+profile_builder:
+  model: mistral-small-latest
+  timeout: 120
+
+reranker:
+  model: mistral-small-2603
+  timeout: 120
