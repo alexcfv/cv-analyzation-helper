@@ -47,7 +47,7 @@ User query → embedding → ChromaDB (top-10 chunks) → group by file → embe
 ## Setup
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/alexcfv/resume-rag-ranker.git
 cd resume-rag-ranker
 python -m venv venv
 source venv/bin/activate
