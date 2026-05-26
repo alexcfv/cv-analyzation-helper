@@ -3,11 +3,12 @@ import json
 
 
 class ProfileReranker:
-    def __init__(self, api_key: str, rate_limiter=None):
+    def __init__(self, api_key: str, model="mistral-small-2603", timeout=120, rate_limiter=None):
+        self.model = model
         self.client = OpenAI(
             api_key=api_key,
             base_url="https://api.mistral.ai/v1",
-            timeout=60
+            timeout=timeout
         )
         self.rate_limiter = rate_limiter
 
@@ -63,7 +64,7 @@ Candidates:
             self.rate_limiter.wait()
 
         response = self.client.chat.completions.create(
-            model="mistral-small-2603",
+            model=self.model,
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"}
         )

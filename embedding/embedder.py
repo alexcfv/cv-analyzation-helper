@@ -2,8 +2,10 @@ import requests
 import os
 
 class MistralEmbedder:
-    def __init__(self, api_key, rate_limiter=None):
+    def __init__(self, api_key, model="mistral-embed", timeout=60, rate_limiter=None):
         self.api_key = api_key
+        self.model = model
+        self.timeout = timeout
         self.url = "https://api.mistral.ai/v1/embeddings"
         self.rate_limiter = rate_limiter
 
@@ -17,9 +19,10 @@ class MistralEmbedder:
                 "Content-Type": "application/json"
             },
             json={
-                "model": "mistral-embed",
+                "model": self.model,
                 "input": text
-            }
+            },
+            timeout=self.timeout
         )
 
         data = response.json()
@@ -41,10 +44,10 @@ class MistralEmbedder:
                     "Content-Type": "application/json"
                 },
                 json={
-                    "model": "mistral-embed",
+                    "model": self.model,
                     "input": batch
                 },
-                timeout=60
+                timeout=self.timeout
             )
 
             if response.status_code != 200:

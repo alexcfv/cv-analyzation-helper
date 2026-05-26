@@ -20,12 +20,12 @@ def main():
 
     rate_limiter = RateLimiter(min_interval=cfg["rate_limiter"]["min_interval"])
 
-    embedder = MistralEmbedder(api_key_mistral, rate_limiter=rate_limiter)
-    explainer = LLMExplainer(api_key_mistral, rate_limiter=rate_limiter)
+    embedder = MistralEmbedder(api_key_mistral, model=cfg["embedder"]["model"], timeout=cfg["embedder"]["timeout"], rate_limiter=rate_limiter)
+    explainer = LLMExplainer(api_key_mistral, model=cfg["explainer"]["model"], timeout=cfg["explainer"]["timeout"], rate_limiter=rate_limiter)
     loader = ResumeLoader()
     profile_repository = ProfileRepository()
-    profile_builder = ProfileBuilder(api_key_mistral, rate_limiter=rate_limiter)
-    profile_reranker = ProfileReranker(api_key_mistral, rate_limiter=rate_limiter)
+    profile_builder = ProfileBuilder(api_key_mistral, model=cfg["profile_builder"]["model"], timeout=cfg["profile_builder"]["timeout"], rate_limiter=rate_limiter)
+    profile_reranker = ProfileReranker(api_key_mistral, model=cfg["reranker"]["model"], timeout=cfg["reranker"]["timeout"], rate_limiter=rate_limiter)
     client = chromadb.PersistentClient(path="./chromadb")
     vector_store = VectorStore(client)
 
