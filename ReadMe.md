@@ -44,20 +44,20 @@ User query → embedding → ChromaDB (top-10 chunks) → group by file → embe
 - 3 explanation calls (one per top candidate)
 - Total: **5 Mistral API calls per search**
 
+## Setup
+
+```bash
+git clone https://github.com/alexcfv/resume-rag-ranker.git
+cd resume-rag-ranker
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp config.example.yaml config.yaml
+# Edit config.yaml — insert your Mistral API key and Telegram bot token
+python bot.py
+```
+
 ## Commands
 
 - `/index /path/to/resumes` — index PDFs and build profiles
 - Send any text message — search for candidates
-
-## Requirements
-
-- Python 3.10+
-- `MISTRAL_API_KEY` in `.env`
-- `TELEGRAM_BOT_API_KEY` in `.env`
-
-## Run
-
-```bash
-source venv/bin/activate
-python bot.py
-```
