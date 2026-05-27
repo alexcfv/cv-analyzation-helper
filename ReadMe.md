@@ -60,4 +60,26 @@ python bot.py
 ## Commands
 
 - `/index /path/to/resumes` — index PDFs and build profiles
-- Send any text message — search for candidates
+- Send any text message — search for candidates.
+  
+  **Message example:**
+
+  ```bash
+  Tech stack:
+  Backend(main language): Golang.
+  Data Bases: PostgreSQL, Cassandra, ElasticSearch, Redis.
+  Infrastructure: Kafka, Kubernetes, Docker, gRPC.
+  Experience:  Java, Python.
+  ```
+  ---
+  **Answer example:**
+  ```bash
+  CV_name.pdf (score: 0.174)
+  The candidate matches all backend and infrastructure requirements
+  (Golang, PostgreSQL, Kafka, Kubernetes, Docker, gRPC, Redis)
+  and has Java/Python experience. Worked at an NDA company as a Senior Golang Engineer,
+  leading DevOps, CI/CD pipelines, and high-load system architecture,
+  improving test coverage and release cycles.
+  Designed telemetry tools for 50K+ users.
+  ```
+## The more specific your request, the more accurate your answer will be.
