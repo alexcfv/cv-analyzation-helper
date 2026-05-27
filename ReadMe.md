@@ -1,3 +1,9 @@
+![Python](https://img.shields.io/badge/python-3.10+-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Mistral](https://img.shields.io/badge/Mistral-API-orange)
+![Telegram](https://img.shields.io/badge/Telegram-bot-blue)
+![ChromaDB](https://img.shields.io/badge/ChromaDB-vector--db-yellow)
+
 AI-powered resume search tool. Ingests PDF resumes, indexes them via Mistral embeddings into ChromaDB, builds structured candidate profiles with LLM, and finds the best match for any job query using two-stage ranking.
 
 ## How it works
