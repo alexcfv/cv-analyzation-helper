@@ -1,5 +1,7 @@
-from db.sqlite.connection import get_db
+import json
 import uuid
+
+from db.sqlite.connection import get_db
 
 class ProfileRepository:
     def add_profiles(self, profiles: list[dict]):
@@ -35,7 +37,7 @@ class ProfileRepository:
         with get_db() as conn:
             conn.execute(
                 "INSERT INTO profiles (uuid, profile_source, profile) VALUES (?, ?, ?)",
-                (profile_uuid, profile_source, str(profile))
+                (profile_uuid, profile_source, json.dumps(profile))
             )
 
     def profile_exists(self, source: str) -> bool:
