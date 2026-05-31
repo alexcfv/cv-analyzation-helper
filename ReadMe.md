@@ -57,7 +57,7 @@ git clone https://github.com/alexcfv/resume-rag-ranker.git
 cd resume-rag-ranker
 python -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install -e .
 cp config.example.yaml config.yaml
 # Edit config.yaml — insert your Mistral API key and Telegram bot token
 python bot.py
